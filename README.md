@@ -11,8 +11,11 @@ Features
 At the moment, KWT supports the following components.
 
 **KCheckbox** - A simple toggle-able checkbox.
+
 **KDiagram/KMutableDiagram** - A diagram, in both mutable and non-mutable versions, which can be added to a container and have text flow around it.
+
 **KRadioButton** - A simple radio button that is part of a group.
+
 **KSelectableLabel** - A KLabel that can receive ActionEvents as if it were a KButton.
 
 Further components are in active development.
