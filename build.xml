@@ -93,11 +93,11 @@
 		<delete dir="${dir.build}" />
 	</target>
 
-	<target name="release" depends="compile,build-unsigned-jar" />
-
 	<target name="build-samples" depends="release">
-		<ant antfile="${dir.samples}/KCheckbox/build.xml" inheritall="false">
+		<ant antfile="${dir.samples}/KWTCheckbox/build.xml" inheritall="false">
 			<property name="jar.kwt" location="${file.output}" />
 		</ant>
 	</target>
+
+	<target name="release" depends="compile,build-unsigned-jar" />
 </project>

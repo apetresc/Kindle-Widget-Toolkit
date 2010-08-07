@@ -28,10 +28,10 @@ import com.amazon.kindle.kindlet.ui.KButton;
  * @author dfabulich
  *
  */
-public class KCheckbox extends KButton implements ActionListener {
+public class KWTCheckbox extends KButton implements ActionListener {
 
     private boolean selected = false;
-    final KCheckboxGroup group;
+    final KWTCheckboxGroup group;
 
     private boolean isRadioButton() {
         return group != null;
@@ -55,12 +55,12 @@ public class KCheckbox extends KButton implements ActionListener {
     private static final int padding = 1, border = 2;
 
     /** Create a checkbox */
-    public KCheckbox() {
+    public KWTCheckbox() {
         this(null);
     }
 
     /** Create a radio button belonging to a group */
-    public KCheckbox(KCheckboxGroup group) {
+    public KWTCheckbox(KWTCheckboxGroup group) {
         this.group = group;
         addActionListener(this);
     }

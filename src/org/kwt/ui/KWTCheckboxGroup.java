@@ -21,20 +21,20 @@ package org.kwt.ui;
  * @author dfabulich
  *
  */
-public class KCheckboxGroup {
-    private KCheckbox selected = null;
+public class KWTCheckboxGroup {
+    private KWTCheckbox selected = null;
 
     /** The currently selected radio button */
-    public KCheckbox getSelected() {
+    public KWTCheckbox getSelected() {
         return selected;
     }
 
     /** Select a radio button, deselecting the previously selected button */
-    public void setSelected(KCheckbox box) {
+    public void setSelected(KWTCheckbox box) {
         if (box != null && box.group != this) {
             return;
         }
-        KCheckbox oldChoice = this.selected;
+        KWTCheckbox oldChoice = this.selected;
         this.selected = box;
         if (oldChoice != null && oldChoice != box && oldChoice.group == this) {
             oldChoice.setSelected(false);

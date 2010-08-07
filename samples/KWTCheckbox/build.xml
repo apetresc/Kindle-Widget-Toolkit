@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="KCheckboxSample" basedir="." default="build-unsigned-active-content">
+<project name="KWTCheckboxSample" basedir="." default="build-unsigned-active-content">
 	<!-- ===================================================================== -->
 	<!-- | BUILD PROPERTIES                                                  | -->
 	<!-- ===================================================================== -->
