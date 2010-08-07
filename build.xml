@@ -1,0 +1,95 @@
+<?xml version="1.0"?>
+
+<project name="KindleWidgetToolkit" basedir="." default="release">
+	<property name="version"			value="0.1" />
+
+	<!-- dir.kdk should point to a the root directory of a working KDK installation. -->
+	<!-- <property name="dir.kdk"		location="" /> -->
+	
+	<property name="dir.src"			location="${basedir}/src" />
+	<property name="dir.build"			location="${basedir}/build" />
+	<property name="dir.build.classes"	location="${dir.build}/classes" />
+	<property name="dir.build.jar"		location="${dir.build}/jar" />
+	<property name="file.output"		location="${dir.build.jar}/kwt-${version}.jar" />
+
+	<property name="pbp-1.1" location="${dir.kdk}/pbp-secop" />
+	<!-- Set the property 'pbp-1.1' to point to the unzipped contents of the PBP download. -->
+	<property name="btclasses.zip" value="${pbp-1.1}/Optimized_nosym/lib/btclasses.zip"/>
+	<property name="basis_security.jar" value="${pbp-1.1}/Optimized_nosym/lib/basis_security.jar"/>
+	<property name="jce.jar" value="${pbp-1.1}/Optimized_nosym/lib/jce.jar"/>
+	<property name="jsse-cdc.jar" value="${pbp-1.1}/Optimized_nosym/lib/jsse-cdc.jar"/>
+
+	<!-- If the user specifies a PBP to use, we check for the existence of jar/zip files from the PBP. -->
+	<available file="${btclasses.zip}" property="btclasses.zip.available"/>
+	<available file="${basis_security.jar}" property="basis_security.jar.available"/>
+	<available file="${jce.jar}" property="jce.jar.available"/>
+	<available file="${jsse-cdc.jar}" property="jsse-cdc.jar.available"/>
+
+	<!-- boot class path for PBP -->
+	<path id="pbp.bootclasspath">
+		<pathelement path="${btclasses.zip}"/>
+		<pathelement path="${basis_security.jar}"/>
+		<pathelement path="${jce.jar}"/>
+		<pathelement path="${jsse-cdc.jar}"/>
+	</path>
+
+	<!-- If pbp-1.1 is specified, check for the existence of the jar/zip files from the PBP -->
+	<target name="pbp-files" if="pbp-1.1">
+		<fail message="Unable to locate btclasses.zip in PBP directory" unless="btclasses.zip.available"/>
+		<fail message="Unable to locate basis_security.jar in PBP directory.  Did you download the version without security support?" unless="basis_security.jar.available"/>
+		<fail message="Unable to locate jce.jar in PBP directory.  Did you download the version without security support?" unless="jce.jar.available"/>
+		<fail message="Unable to locate jsse-cdc.jar in PBP directory.  Did you download the version without security support?" unless="jsse-cdc.jar.available"/>
+	</target>
+
+	<!-- If pbp-1.1 is not specified, issue a nice message -->
+	<target name="check-pbp" unless="pbp-1.1" depends="pbp-files">
+		<echo message="Compiling using the default bootclasspath.  It is advised to compile using the Personal Basis Profile. "/>
+		<echo message="The PBP libraries may be downloaded from http://java.sun.com/javame/downloads/index.jsp
+	by selecting 'Personal Basis Profile 1.1 Reference Implementation (JSR 217)'.
+	Download the 'Personal Basis Profile Reference Implementation'.  Be sure to select the version with the Foundation Profile Security Optional Package. "/>
+		<echo message="Specify the location of the PBP with the property pbp-1.1.  Eg. ant -Dpbp-1.1=PATH-TO-PBP"/>
+	</target>
+
+	<!-- ===================================================================== -->
+	<!-- | BUILD TARGETS                                                     | -->
+	<!-- ===================================================================== -->
+	<target name="compile" description="Compiles the Java source files" depends="check-pbp">
+		<mkdir dir="${dir.build.classes}" />
+		<!--
+			Compile source files.
+			Note the target and source attributes are required to generate
+			bytecode compatible with the Kindle Development Kit (KDK)/
+		-->
+		<javac target="1.4"
+			source="1.4"
+			listfiles="yes"
+			srcdir="${dir.src}"
+			destdir="${dir.build.classes}"
+			includeAntRuntime="no"
+			bootclasspathref="pbp.bootclasspath"
+			debug="true">
+				
+			<classpath>
+				<!-- Include the Kindle Development Kit (KDK) APIs on the classpath -->
+				<fileset dir="${dir.kdk}/lib">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+			<include name="**/*.java" />
+		</javac>
+		<copy todir="${dir.build.classes}">
+			<fileset file="${basedir}/LICENSE" />
+		</copy>
+	</target>
+	
+	<target name="build-unsigned-jar" description="Creates a distributable JAR">
+		<mkdir dir="${dir.build.jar}" />
+		<jar basedir="${dir.build.classes}" destfile="${file.output}" />
+	</target>
+	
+	<target name="clean" description="Cleans the build directory.">
+		<delete dir="${dir.build}" />
+	</target>
+	
+	<target name="release" depends="compile,build-unsigned-jar" />
+</project>

@@ -1,3 +1,7 @@
+# Build directory ignore
+build/
+
+# Eclipse-specific ignores
 bin/
 .settings/
 .classpath
