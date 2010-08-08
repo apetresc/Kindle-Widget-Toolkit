@@ -33,7 +33,7 @@ Although the KDK does not enable its app bundles to contain third-party JARs, yo
 Documentation
 -------------
 
-You can view a full JavaDoc API Reference for KWT [here](http://s3.amazonaws.com/kwt-dev/javadoc/), or you can generate one yourself using the **generate-public-javadoc** build target.
+You can view a full JavaDoc API Reference for KWT [here](http://s3.amazonaws.com/kwt-dev/javadoc/index.html), or you can generate one yourself using the **generate-public-javadoc** build target.
 
 License
 -------
