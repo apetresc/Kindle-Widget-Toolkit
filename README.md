@@ -30,6 +30,11 @@ You can simply copy the widgets you want to use into your own package and compil
 ### Use the JAR
 Although the KDK does not enable its app bundles to contain third-party JARs, you can add a target to your **build.xml** that copies the required Class files into your own JAR. Updating KWT then becomes simply a matter of dropping in the latest release. You can see an example of such a target in the sample project distributed together with KWT.
 
+Documentation
+-------------
+
+You can view a full JavaDoc API Reference for KWT [here](http://s3.amazonaws.com/kwt-dev/javadoc/), or you can generate one yourself using the **generate-public-javadoc** build target.
+
 License
 -------
 
