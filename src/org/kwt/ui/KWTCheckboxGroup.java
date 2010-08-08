@@ -18,18 +18,27 @@ package org.kwt.ui;
  * This group binds together multiple radio buttons, ensuring that only one
  * radio button is selected at a time.
  * 
- * @author dfabulich
+ * @author Dan Fabulich
  *
  */
 public class KWTCheckboxGroup {
     private KWTCheckbox selected = null;
 
-    /** The currently selected radio button */
+    /** 
+     * Returns the currently selected radio button.
+     * 
+     * @return the currently selected radio button
+     */
     public KWTCheckbox getSelected() {
         return selected;
     }
 
-    /** Select a radio button, deselecting the previously selected button */
+    /** 
+     * Selects a radio button, deselecting the previously selected button.
+     * 
+     * @param box a radio button belonging to this group, or <code>null</code> to deselect
+     * everything.
+     */
     public void setSelected(KWTCheckbox box) {
         if (box != null && box.group != this) {
             return;
@@ -43,6 +52,5 @@ public class KWTCheckboxGroup {
             box.setSelected(true);
         }
     }
-
 
 }

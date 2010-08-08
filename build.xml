@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="KindleWidgetToolkit" basedir="." default="build-samples">
+<project name="KindleWidgetToolkit" basedir="." default="release">
 	<property name="version"			value="0.1" />
 
 	<!-- dir.kdk should point to the root directory of a working KDK installation. -->
@@ -9,6 +9,7 @@
 	<property name="dir.src"			location="${basedir}/src" />
 	<property name="dir.samples"		location="${basedir}/samples" />
 	<property name="dir.build"			location="${basedir}/build" />
+	<property name="dir.build.doc"		location="${dir.build}/doc" />
 	<property name="dir.build.classes"	location="${dir.build}/classes" />
 	<property name="dir.build.jar"		location="${dir.build}/jar" />
 	<property name="file.output"		location="${dir.build.jar}/kwt-${version}.jar" />
@@ -92,8 +93,12 @@
 	<target name="clean" description="Cleans the build directory.">
 		<delete dir="${dir.build}" />
 	</target>
+	
+	<!-- ===================================================================== -->
+	<!-- | RELEASE TARGETS                                                   | -->
+	<!-- ===================================================================== -->
 
-	<target name="build-samples" depends="release">
+	<target name="build-samples" depends="build-unsigned-jar">
 		<ant antfile="${dir.samples}/KWTCheckbox/build.xml" inheritall="false">
 			<property name="jar.kwt" location="${file.output}" />
 		</ant>
@@ -102,5 +107,28 @@
 		</ant>
 	</target>
 
-	<target name="release" depends="compile,build-unsigned-jar" />
+	<target name="generate-public-javadoc">
+		<mkdir dir="${dir.build.doc}" />
+		
+		<javadoc access="public"
+			destdir="${dir.build.doc}"
+			author="true"
+			version="true"
+			use="true"
+			windowtitle="KWT (Kindle Widget Toolkit) Public API Documentation">
+			<fileset dir="${dir.src}" defaultexcludes="yes">
+				<include name="**/*.java" />
+			</fileset>
+			<classpath>
+				<!-- Include the Kindle Development Kit (KDK) APIs on the classpath -->
+				<fileset dir="${dir.kdk}/lib">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+			<link href="http://download.oracle.com/javase/1.4.2/docs/api/" />
+			<link href="http://kdk-javadocs.s3.amazonaws.com/" />
+		</javadoc>
+	</target>
+
+	<target name="release" depends="compile,build-unsigned-jar,build-samples,generate-public-javadoc" />
 </project>

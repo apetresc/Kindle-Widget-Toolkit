@@ -12,7 +12,6 @@
  * License.
  */
 
-
 package org.kwt.ui;
 
 import java.awt.Color;
@@ -24,25 +23,42 @@ import java.awt.event.ActionListener;
 import com.amazon.kindle.kindlet.ui.KButton;
 
 /**
- * Custom checkbox for use in Kindle KDK.
- * @author dfabulich
+ * A custom checkbox. If the KWTCheckbox belongs to an instance of a KWTCheckboxGroup, it will behave
+ * and look like a radio button; otherwise, it will be a simple toggleable checkbox.
+ * 
+ * <br><br><font size="1">Example render: </font>
+ * <img src="http://s3.amazonaws.com/kwt-dev/javadoc/KCheckbox_ExampleRender.png">
+ * 
+ * @author Dan Fabulich
  *
  */
 public class KWTCheckbox extends KButton implements ActionListener {
-
+    private static final long serialVersionUID = 8105922331821759692L;
+    
     private boolean selected = false;
     final KWTCheckboxGroup group;
+
+    // TODO: Make these values styleable.
+    private static final int padding = 1, border = 2;
 
     private boolean isRadioButton() {
         return group != null;
     }
 
-    /** Is this box checked? */
+    /** 
+     * Returns whether the box is checked.
+     * 
+     * @return whether the box is checked
+     */
     public boolean isSelected() {
         return selected;
     }
 
-    /** Check/uncheck this box */
+    /** Toggle the state of this box. If it belongs to a KWTCheckboxGroup, it will deselect the currently
+     *  selected box in that group.
+     *  
+     *  @param selected whether to select or deselect this box.
+     */
     public void setSelected(boolean selected) {
         if (this.selected == selected) return;
         if (selected && group != null) group.setSelected(this);
@@ -50,31 +66,41 @@ public class KWTCheckbox extends KButton implements ActionListener {
         repaint();
     }
 
-    private static final long serialVersionUID = 8105922331821759692L;
-    // Should these be configurable?  Probably.  Just steal the code if you want to tweak these numbers.
-    private static final int padding = 1, border = 2;
-
-    /** Create a checkbox */
+    /** 
+     * Constructs a new checkbox. It will be a toggleable checkbox not belonging to a group. 
+     */
     public KWTCheckbox() {
         this(null);
     }
 
-    /** Create a radio button belonging to a group */
+    /** Constructs a radio button belonging to a group.
+     *
+     *  @param group the group this radio button will belong to
+     */
     public KWTCheckbox(KWTCheckboxGroup group) {
         this.group = group;
         addActionListener(this);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     public Dimension getPreferredSize() {
         return getMinimumSize();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     public Dimension getMinimumSize() {
         int d = getFontMetrics(getFont()).getMaxAscent();
         d += (padding + border) * 2;
         return new Dimension(d, d);
     }
 
+    /**
+     * {@inheritDoc }
+     */
     public void paint(Graphics g) {
         // Max Ascent ~ maximum height of a letter from the baseline
         // We'll use maxAscent to size our checkbox
@@ -109,8 +135,13 @@ public class KWTCheckbox extends KButton implements ActionListener {
         }
     }
 
-    /** Select this box */
-    public void actionPerformed(ActionEvent e) {
+    /** 
+     * Called when the checkbox is toggled by the user. This method should never be called by
+     * client code.
+     * 
+     * @param event the event that toggled this action
+     */
+    public void actionPerformed(ActionEvent event) {
         if (isRadioButton() && selected) return; // can't deselect last radio button
         setSelected(!selected);
     }
