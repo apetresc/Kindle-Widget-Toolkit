@@ -125,7 +125,7 @@
 					<include name="**/*.jar" />
 				</fileset>
 			</classpath>
-			<link href="http://download.oracle.com/javase/1.4.2/docs/api/" />
+			<link href="http://download-llnw.oracle.com/javame/config/cdc/ref-impl/pbp1.1.2/jsr217/" />
 			<link href="http://kdk-javadocs.s3.amazonaws.com/" />
 		</javadoc>
 	</target>
