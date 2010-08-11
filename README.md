@@ -14,6 +14,8 @@ At the moment, KWT supports the following components.
 
 **KWTDiagram/KWTMutableDiagram** - A diagram, in both mutable and non-mutable versions, which can be added to a container and have text flow around it.
 
+**KWTScrollPanel** - A KPanel that supports vertical scrolling, instead of the Kindle's usual Paged metaphor.
+
 **KWTSelectableLabel** - A KLabel that can receive ActionEvents as if it were a KButton.
 
 Further components are in active development.

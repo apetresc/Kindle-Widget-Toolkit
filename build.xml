@@ -85,7 +85,7 @@
 		</copy>
 	</target>
 
-	<target name="build-unsigned-jar" description="Creates a distributable JAR">
+	<target name="build-unsigned-jar" depends="compile" description="Creates a distributable JAR">
 		<mkdir dir="${dir.build.jar}" />
 		<jar basedir="${dir.build.classes}" destfile="${file.output}" />
 	</target>
@@ -104,6 +104,9 @@
 		</ant>
 		<ant antfile="${dir.samples}/KWTSelectableLabel/build.xml" inheritall="false">
 			<property name="jar.kwt" location="${file.output}" />
+		</ant>
+		<ant antfile="${dir.samples}/KWTScrollPanel/build.xml" inheritall="false">
+			<property name="jar.kwt" location="${file.output}" />			
 		</ant>
 	</target>
 
