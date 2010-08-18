@@ -206,11 +206,16 @@ public class KWTSelectableLabel extends KLabel {
         super.paint(g);
         spoofSize = false;
         if (this.isFocusOwner()) {
+            int y = super.getSize().height - (underlineGap + underlineWidth);
+            g.setColor(Color.BLACK);
             switch (underlineStyle) {
             case STYLE_SOLID:
-                int y = super.getSize().height - (underlineGap + underlineWidth);
-                g.setColor(Color.BLACK);
                 g.fillRect(0, y + underlineGap, this.getWidth() - 1, underlineWidth - 1);
+                break;
+            case STYLE_DASHED:
+                for (int i = 0; i <= (this.getWidth() - 1) / (underlineWidth - 1); i += 2) {
+                    g.fillRect(i * (underlineWidth - 1), y + underlineGap, underlineWidth - 1, underlineWidth - 1);
+                }
             }
         }
     }

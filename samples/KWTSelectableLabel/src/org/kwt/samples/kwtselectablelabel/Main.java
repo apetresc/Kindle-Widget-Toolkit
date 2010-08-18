@@ -31,6 +31,9 @@ public class Main extends AbstractKindlet {
             labels[i] = new KWTSelectableLabel("This is Label #" + i);
             labels[i].setUnderlineWidth((i+1) * 2);
             labels[i].setUnderlineGap(i * 2);
+            labels[i].setUnderlineStyle((i % 2 == 0) ? 
+                    KWTSelectableLabel.STYLE_SOLID 
+                  : KWTSelectableLabel.STYLE_DASHED);
             labels[i].addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent arg0) {
                     description.setText("Label #" + selectedLabel + " was selected.");
