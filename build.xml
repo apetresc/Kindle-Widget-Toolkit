@@ -102,6 +102,9 @@
 		<ant antfile="${dir.samples}/KWTCheckbox/build.xml" inheritall="false">
 			<property name="jar.kwt" location="${file.output}" />
 		</ant>
+		<ant antfile="${dir.samples}/KWTProgressBar/build.xml" inheritall="false">
+			<property name="jar.kwt" location="${file.output}" />
+		</ant>
 		<ant antfile="${dir.samples}/KWTSelectableLabel/build.xml" inheritall="false">
 			<property name="jar.kwt" location="${file.output}" />
 		</ant>
