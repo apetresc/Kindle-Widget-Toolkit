@@ -27,7 +27,7 @@ import com.amazon.kindle.kindlet.ui.KButton;
  * and look like a radio button; otherwise, it will be a simple toggleable checkbox.
  * 
  * <br><br><font size="1">Example render: </font>
- * <img src="http://s3.amazonaws.com/kwt-dev/javadoc/KCheckbox_ExampleRender.png">
+ * <img src="http://s3.amazonaws.com/kwt-dev/javadoc_images/KWTCheckbox_ExampleRender.png">
  * 
  * @author Dan Fabulich
  *

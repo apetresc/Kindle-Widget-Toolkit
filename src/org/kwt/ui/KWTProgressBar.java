@@ -28,7 +28,7 @@ import com.amazon.kindle.kindlet.ui.KComponent;
  * to emulate the book progress bar at the bottom of the regular Kindle reader application.
  * 
  * <br><br><font size="1">Example render: </font>
- * <img src="http://s3.amazonaws.com/kwt-dev/javadoc/KWTProgressBar_ExampleRender.png">
+ * <img src="http://s3.amazonaws.com/kwt-dev/javadoc_images/KWTProgressBar_ExampleRender.png">
  * 
  * @author Adrian Petrescu
  *

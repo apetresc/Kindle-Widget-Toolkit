@@ -20,7 +20,7 @@ import com.amazon.kindle.kindlet.ui.KLabel;
  * used in lieu of a KButton.
  * 
  * <br><br><font size="1">Example render: </font>
- * <img src="http://s3.amazonaws.com/kwt-dev/javadoc/KSelectableLabel_ExampleRender.png">
+ * <img src="http://s3.amazonaws.com/kwt-dev/javadoc_images/KWTSelectableLabel_ExampleRender.png">
  * 
  * @author Adrian Petrescu
  *
