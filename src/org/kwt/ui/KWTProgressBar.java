@@ -27,6 +27,9 @@ import com.amazon.kindle.kindlet.ui.KComponent;
  * A progress bar. Represents the proportion of progress towards completing a particular task. Meant
  * to emulate the book progress bar at the bottom of the regular Kindle reader application.
  * 
+ * <br><br><font size="1">Example render: </font>
+ * <img src="http://s3.amazonaws.com/kwt-dev/javadoc/KWTProgressBar_ExampleRender.png">
+ * 
  * @author Adrian Petrescu
  *
  */
@@ -38,8 +41,11 @@ public class KWTProgressBar extends KComponent {
     private static final int HORIZONTAL_PADDING = 10;
     private static final int CORNER_ROUNDING = 10;
     
+    /** An empty style. */
     public static final int STYLE_NONE = 0;
+    /** A percentage description of progress */
     public static final int STYLE_PERCENTAGE = 1;
+    /** A fractional description of progress */
     public static final int STYLE_TOTAL = 2;
     
     private int width;
@@ -62,6 +68,8 @@ public class KWTProgressBar extends KComponent {
     public KWTProgressBar(int totalTicks) {
         this.totalTicks = totalTicks;
         this.currentTick = 0;
+        
+        this.setFocusable(false);
     }
     
     /**
