@@ -100,6 +100,22 @@ public class KWTProgressBar extends KComponent {
     }
     
     /**
+     * Increments the current tick by 1. If the current tick is already at
+     * the maximum value, this does nothing.
+     */
+    public void incrementTick() {
+        if (currentTick < totalTicks) currentTick += 1;
+    }
+    
+    /**
+     * Decrements the current tick by 1. If the current tick is already at
+     * 0, this does nothing.
+     */
+    public void decrementTick() {
+        if (currentTick > 0) currentTick -= 1;
+    }
+    
+    /**
      * Returns the style of label to be used. Valid options are:
      * <ul>
      *   <li> <code>STYLE_NONE</code> - no label will be shown.
