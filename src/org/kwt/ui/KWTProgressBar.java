@@ -19,6 +19,7 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 
 import org.apache.log4j.Logger;
+import org.kwt.InvalidStyleException;
 
 import com.amazon.kindle.kindlet.ui.KComponent;
 
@@ -34,10 +35,15 @@ public class KWTProgressBar extends KComponent {
     private static final Logger logger = Logger.getLogger(KWTProgressBar.class);
     
     private static final int VERTICAL_PADDING   = 3;
-    private static final int HORIZONTAL_PADDING = 3;
+    private static final int HORIZONTAL_PADDING = 10;
     private static final int CORNER_ROUNDING = 10;
     
+    public static final int STYLE_NONE = 0;
+    public static final int STYLE_PERCENTAGE = 1;
+    public static final int STYLE_TOTAL = 2;
+    
     private int width;
+    private int labelStyle = STYLE_PERCENTAGE;
     private int totalTicks;
     private int currentTick;
     
@@ -88,6 +94,38 @@ public class KWTProgressBar extends KComponent {
     }
     
     /**
+     * Returns the style of label to be used. Valid options are:
+     * <ul>
+     *   <li> <code>STYLE_NONE</code> - no label will be shown.
+     *   <li> <code>STYLE_PERCENTAGE</code> - the label will display a percentage of completion.
+     *   <li> <code>STYLE_TOTAL</code> - the label will display a fraction of <code>totalTicks</code>
+     * </ul>
+     * 
+     * @return the style of label to be used.
+     */
+    public int getLabelStyle() {
+        return labelStyle;
+    }
+    
+    /**
+     * Sets the style of label to be used. Valid styles are:
+     * <ul>
+     *   <li> <code>STYLE_NONE</code> - no label will be shown.
+     *   <li> <code>STYLE_PERCENTAGE</code> - the label will display a percentage of completion.
+     *   <li> <code>STYLE_TOTAL</code> - the label will display a fraction of <code>totalTicks</code>
+     * </ul>
+     * 
+     * @param style the style of label to be used.
+     * @throws InvalidStyleException if <code>style</code> is not one of the allowed values.
+     */
+    public void setLabelStyle(int style) throws InvalidStyleException {
+        if (style < STYLE_NONE || style > STYLE_TOTAL)
+            throw new InvalidStyleException(this.getClass().getName() + 
+                " does not support the given style for highlighting.", style);
+        labelStyle = style;
+    }
+    
+    /**
      * {@inheritDoc }
      */
     public Dimension getPreferredSize() {
@@ -100,8 +138,8 @@ public class KWTProgressBar extends KComponent {
      * {@inheritDoc }
      */
     public Dimension getMinimumSize() {
-        return new Dimension(getFontMetrics(getFont()).stringWidth("100%") + 2 * HORIZONTAL_PADDING,
-                getFontMetrics(getFont()).getHeight() + 2 * VERTICAL_PADDING);
+        return new Dimension(getMinimumWidth() + 2 * HORIZONTAL_PADDING,
+                getMinimumHeight() + 2 * VERTICAL_PADDING);
     }
     
     /**
@@ -121,10 +159,44 @@ public class KWTProgressBar extends KComponent {
         g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, CORNER_ROUNDING, CORNER_ROUNDING);
         g.setColor(Color.BLACK);
         g.fillRoundRect(0, 0, (int) (progress * getWidth()) - 1, getHeight() - 1, CORNER_ROUNDING, CORNER_ROUNDING);
-        String progressString = ((int) (progress * 100)) + "%";
-        g.setXORMode(Color.WHITE);
-        g.drawString(progressString,
-                ((getWidth() - 1) / 2) - (getFontMetrics(getFont()).stringWidth(progressString) / 2),
-                getFontMetrics(getFont()).getHeight());
+        
+        if (labelStyle == STYLE_PERCENTAGE || labelStyle == STYLE_TOTAL) {
+            String progressString = "";
+            switch (labelStyle) {
+            case STYLE_PERCENTAGE:
+                progressString = ((int) (progress * 100)) + "%";
+                break;
+            case STYLE_TOTAL:
+                progressString = currentTick + "/" + totalTicks;
+            }
+            g.setXORMode(Color.WHITE);
+            g.drawString(progressString,
+                    ((getWidth() - 1) / 2) - (getFontMetrics(getFont()).stringWidth(progressString) / 2),
+                    getFontMetrics(getFont()).getHeight());
+        }
+    }
+    
+    private int getMinimumHeight() {
+        switch (labelStyle) {
+        case STYLE_NONE: return 0;
+        case STYLE_PERCENTAGE:
+        case STYLE_TOTAL:
+        default:
+            return getFontMetrics(getFont()).getHeight();
+        }
+    }
+    
+    private int getMinimumWidth() {
+        switch (labelStyle) {
+        case STYLE_NONE: return 0;
+        case STYLE_PERCENTAGE:
+            return getFontMetrics(getFont()).stringWidth("100%");
+        case STYLE_TOTAL:
+            String longest = String.valueOf(totalTicks);
+            longest = longest + "/" + longest;
+            return getFontMetrics(getFont()).stringWidth(longest);
+        }
+        
+        return 0;
     }
 }
