@@ -18,7 +18,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import org.apache.log4j.Logger;
 import org.kwt.InvalidStyleException;
 
 import com.amazon.kindle.kindlet.ui.KComponent;
@@ -35,7 +34,6 @@ import com.amazon.kindle.kindlet.ui.KComponent;
  */
 public class KWTProgressBar extends KComponent {
     private static final long serialVersionUID = 5781953629278873008L;
-    private static final Logger logger = Logger.getLogger(KWTProgressBar.class);
     
     private static final int VERTICAL_PADDING   = 3;
     private static final int HORIZONTAL_PADDING = 10;
@@ -163,7 +161,6 @@ public class KWTProgressBar extends KComponent {
      */
     public void paint(Graphics g) {
         double progress = (double) currentTick / totalTicks;
-        logger.info("Progress: " + progress);
         g.drawRoundRect(0, 0, getWidth() - 1, getHeight() - 1, CORNER_ROUNDING, CORNER_ROUNDING);
         g.setColor(Color.BLACK);
         g.fillRoundRect(0, 0, (int) (progress * getWidth()) - 1, getHeight() - 1, CORNER_ROUNDING, CORNER_ROUNDING);
