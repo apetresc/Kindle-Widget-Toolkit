@@ -80,6 +80,19 @@ public class KWTProgressBar extends KComponent {
     }
     
     /**
+     * Sets the total number of ticks. If the current tick is larger than <code>totalTicks</code>,
+     * then it is set to <code>totalTicks</code>.
+     * 
+     * @param totalTicks the total number of ticks representing completion of the task.
+     */
+    public void setTotalTicks(int totalTicks) {
+        this.totalTicks = totalTicks;
+        
+        // Make sure current tick is not beyond the maximum value.
+        setCurrentTick(currentTick);
+    }
+    
+    /**
      * Returns the current tick.
      * 
      * @return the current tick.
